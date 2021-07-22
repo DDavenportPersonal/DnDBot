@@ -2,25 +2,14 @@ public class Spell {
     private String name;
     private int level;
     private String castingTime;
-    private enum school{
-        ABJURATION,
-        CONJURATION,
-        DIVINATION,
-        ENCHANTMENT,
-        EVOCATION,
-        ILLUSION,
-        NECROMANCY,
-        PSIONIC,
-        TRANSMUTATION
-    };
+    private String school;
     private boolean concentration;
+    private boolean ritual;
     private String range;
-    private String components;
+    private SpellComponents components;
     private String duration;
     private String description;
     private CharClass[] classes;
-    private Subclass[] subclasses;
-    private Race[] races;
     private String source;
 
     public String getName() {
@@ -47,6 +36,14 @@ public class Spell {
         this.castingTime = castingTime;
     }
 
+    public String getSchool() {
+        return this.school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
     public boolean isConcentration() {
         return this.concentration;
     }
@@ -59,6 +56,18 @@ public class Spell {
         this.concentration = concentration;
     }
 
+    public boolean isRitual() {
+        return this.ritual;
+    }
+
+    public boolean getritual() {
+        return this.ritual;
+    }
+
+    public void setRitual(boolean ritual) {
+        this.ritual = ritual;
+    }
+
     public String getRange() {
         return this.range;
     }
@@ -67,11 +76,11 @@ public class Spell {
         this.range = range;
     }
 
-    public String getComponents() {
+    public SpellComponents getComponents() {
         return this.components;
     }
 
-    public void setComponents(String components) {
+    public void setComponents(SpellComponents components) {
         this.components = components;
     }
 
@@ -99,22 +108,6 @@ public class Spell {
         this.classes = classes;
     }
 
-    public Subclass[] getSubclasses() {
-        return this.subclasses;
-    }
-
-    public void setSubclasses(Subclass[] subclasses) {
-        this.subclasses = subclasses;
-    }
-
-    public Race[] getRaces() {
-        return this.races;
-    }
-
-    public void setRaces(Race[] races) {
-        this.races = races;
-    }
-
     public String getSource() {
         return this.source;
     }
@@ -124,18 +117,17 @@ public class Spell {
     }
 
 
-    public Spell(String name, int level, String castingTime, boolean concentration, String range, String components, String duration, String description, CharClass[] classes, Subclass[] subclasses, Race[] races, String source) {
+    public Spell(String name, int level, String castingTime, String school, boolean concentration, String range, SpellComponents components, String duration, String description, CharClass[] classes, Subclass[] subclasses, Race[] races, String source) {
         this.name = name;
         this.level = level;
         this.castingTime = castingTime;
+        this.school = school;
         this.concentration = concentration;
         this.range = range;
         this.components = components;
         this.duration = duration;
         this.description = description;
         this.classes = classes;
-        this.subclasses = subclasses;
-        this.races = races;
         this.source = source;
     }
 
