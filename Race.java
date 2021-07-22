@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Race {
-    private ASI asi;
+    private AbilityScores ASI;
     private String age;
     private String alignment;
     private String size;
@@ -14,16 +14,16 @@ public class Race {
         GARGANTUAN
     };
     private int speed;
-    private String[] toolProfs;
-    private String[] languages;
+    private ArrayList<Tools> tools;
+    private ArrayList<Language> languages;
     private ArrayList<Feature> feats;
 
-    public ASI getASI() {
-        return asi;
+    public AbilityScores getASI() {
+        return ASI;
     }
 
-    public void setASI(ASI asi) {
-        this.asi = asi;
+    public void setASI(AbilityScores ASI) {
+        this.ASI = ASI;
     }
 
     public String getAge() {
@@ -56,6 +56,22 @@ public class Race {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public ArrayList<Tools> getTools() {
+        return this.tools;
+    }
+
+    public void setTools(ArrayList<Tools> toolProfs) {
+        this.tools = toolProfs;
+    }
+
+    public ArrayList<Language> getLanguages() {
+        return this.languages;
+    }
+
+    public void setLanguages(ArrayList<Language> languages) {
+        this.languages = languages;
     }
 
     public ArrayList<Feature> getFeats() {

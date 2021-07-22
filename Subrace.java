@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
 public class Subrace {
-    private ASI asi;
+    private AbilityScores ASI;
     private ArrayList<Feature> feats;
 
-    public ASI getAsi() {
-        return this.asi;
+    public AbilityScores getASI() {
+        return this.ASI;
     }
 
-    public void setAsi(ASI asi) {
-        this.asi = asi;
+    public void setASI(AbilityScores ASI) {
+        this.ASI = ASI;
     }
 
     public ArrayList<Feature> getFeats() {
@@ -24,8 +24,8 @@ public class Subrace {
         this.getFeats().add(feat);
     }
 
-    public Subrace(ASI asi, ArrayList<Feature> feats) {
-        this.asi = asi;
+    public Subrace(AbilityScores ASI, ArrayList<Feature> feats) {
+        this.ASI = ASI;
         this.feats = feats;
     }
 
