@@ -55,6 +55,17 @@ public class Char {
         setCHAmod((CHA - 10) / 2);
     }
 
+    public void setAllAbilityScores(int[] AbilityScores) {
+        if (AbilityScores.length == 6){
+            setSTR(AbilityScores[0]);
+            setDEX(AbilityScores[1]);
+            setCON(AbilityScores[2]);
+            setINT(AbilityScores[3]);
+            setWIS(AbilityScores[4]);
+            setCHA(AbilityScores[5]);
+        }
+    }
+
     //Ability Score Modifiers
     private int STRmod;
     private int DEXmod;
@@ -87,6 +98,7 @@ public class Char {
     }
     public void setDEXmod(int DEXmod) {
         this.DEXmod = DEXmod;
+        setInitiative(DEXmod);
     }
     public void setCONmod(int CONmod) {
         this.CONmod = CONmod;
@@ -101,107 +113,485 @@ public class Char {
         this.CHAmod = CHAmod;
     }
 
-    int AC = 10 + DEXmod;
-    int initiative = DEXmod;
+    private int AC;
+
+    public int getAC() {
+        return AC;
+    }
+
+    public void setAC(int AC) {
+        this.AC = AC;
+    }
+
+    public void setBaseAC() {
+        this.AC = 10 + getDEXmod();
+    }
+
+    private int initiative;
+
+    public int getInitiative() {
+        return initiative;
+    }
+
+    public void setInitiative(int initiative) {
+        this.initiative = initiative;
+    }
 
     //Saving Throws
     //Saving Throw Proficiencies
-    boolean STRSTprof;
-    boolean DEXSTprof;
-    boolean CONSTprof;
-    boolean INTSTprof;
-    boolean WISSTprof;
-    boolean CHASTprof;
+    private boolean STRSTprof;
+    private boolean DEXSTprof;
+    private boolean CONSTprof;
+    private boolean INTSTprof;
+    private boolean WISSTprof;
+    private boolean CHASTprof;
+
+    public boolean getSTRSTprof() {
+        return STRSTprof;
+    }
+    public boolean getDEXSTprof() {
+        return DEXSTprof;
+    }
+    public boolean getCONSTprof() {
+        return CONSTprof;
+    }
+    public boolean getINTSTprof() {
+        return INTSTprof;
+    }
+    public boolean getWISSTprof() {
+        return WISSTprof;
+    }
+    public boolean getCHASTprof() {
+        return CHASTprof;
+    }
+
+    public void setSTRSTprof(boolean STRSTprof) {
+        this.STRSTprof = STRSTprof;
+        setSTRST(STRSTprof ? (STRmod + ProficiencyBonus) : STRmod);
+    }
+    public void setDEXSTprof(boolean DEXSTprof) {
+        this.DEXSTprof = DEXSTprof;
+        setDEXST(DEXSTprof ? (DEXmod + ProficiencyBonus) : DEXmod);
+    }
+    public void setCONSTprof(boolean CONSTprof) {
+        this.CONSTprof = CONSTprof;
+        setCONST(CONSTprof ? (CONmod + ProficiencyBonus) : CONmod);
+    }
+    public void setINTSTprof(boolean INTSTprof) {
+        this.INTSTprof = INTSTprof;
+        setINTST(INTSTprof ? (INTmod + ProficiencyBonus) : INTmod);
+    }
+    public void setWISSTprof(boolean WISSTprof) {
+        this.WISSTprof = WISSTprof;
+        setWISST(WISSTprof ? (WISmod + ProficiencyBonus) : WISmod);
+    }
+    public void setCHASTprof(boolean CHASTprof) {
+        this.CHASTprof = CHASTprof;
+        setCHAST(CHASTprof ? (CHAmod + ProficiencyBonus) : CHAmod);
+    }
+
+    public void setAllSTprofs(boolean[] STprofs) {
+        if (STprofs.length == 6) {
+            setSTRSTprof(STprofs[0]);
+            setDEXSTprof(STprofs[1]);
+            setCONSTprof(STprofs[2]);
+            setINTSTprof(STprofs[3]);
+            setWISSTprof(STprofs[4]);
+            setCHASTprof(STprofs[5]);
+        }
+    }
 
     //Saving Throw Modifiers
-    int STRST = STRSTprof ? (STRmod + ProficiencyBonus) : STRmod;
-    int DEXST = DEXSTprof ? (DEXmod + ProficiencyBonus) : DEXmod;
-    int CONST = CONSTprof ? (CONmod + ProficiencyBonus) : CONmod;
-    int INTST = INTSTprof ? (INTmod + ProficiencyBonus) : INTmod;
-    int WISST = WISSTprof ? (WISmod + ProficiencyBonus) : WISmod;
-    int CHAST = CHASTprof ? (CHAmod + ProficiencyBonus) : CHAmod;
+    private int STRST;
+    private int DEXST;
+    private int CONST;
+    private int INTST;
+    private int WISST;
+    private int CHAST;
+
+    public int getSTRST() {
+        return STRST;
+    }
+    public int getDEXST() {
+        return DEXST;
+    }
+    public int getCONST() {
+        return CONST;
+    }
+    public int getINTST() {
+        return INTST;
+    }
+    public int getWISST() {
+        return WISST;
+    }
+    public int getCHAST() {
+        return CHAST;
+    }
+
+    public void setSTRST(int STRST) {
+        this.STRST = STRST;
+    }
+    public void setDEXST(int DEXST) {
+        this.DEXST = DEXST;
+    }
+    public void setCONST(int CONST) {
+        this.CONST = CONST;
+    }
+    public void setINTST(int INTST) {
+        this.INTST = INTST;
+    }
+    public void setWISST(int WISST) {
+        this.WISST = WISST;
+    }
+    public void setCHAST(int CHAST) {
+        this.CHAST = CHAST;
+    }
 
     //Skills
     //Skill Proficiencies
-    boolean AcrobaticsProf;
-    boolean AnimalHandlingProf;
-    boolean ArcanaProf;
-    boolean AthleticsProf;
-    boolean DeceptionProf;
-    boolean HistoryProf;
-    boolean InsightProf;
-    boolean IntimidationProf;
-    boolean InvestigationProf;
-    boolean MedicineProf;
-    boolean NatureProf;
-    boolean PerceptionProf;
-    boolean PerformanceProf;
-    boolean PersuasionProf;
-    boolean ReligionProf;
-    boolean SleightOfHandProf;
-    boolean StealthProf;
-    boolean SurvivalProf;
+    private boolean AcrobaticsProf;
+    private boolean AnimalHandlingProf;
+    private boolean ArcanaProf;
+    private boolean AthleticsProf;
+    private boolean DeceptionProf;
+    private boolean HistoryProf;
+    private boolean InsightProf;
+    private boolean IntimidationProf;
+    private boolean InvestigationProf;
+    private boolean MedicineProf;
+    private boolean NatureProf;
+    private boolean PerceptionProf;
+    private boolean PerformanceProf;
+    private boolean PersuasionProf;
+    private boolean ReligionProf;
+    private boolean SleightOfHandProf;
+    private boolean StealthProf;
+    private boolean SurvivalProf;
+
+    public boolean getAcrobaticsProf() {
+        return AcrobaticsProf;
+    }
+    public boolean getAnimalHandlingProf() {
+        return AnimalHandlingProf;
+    }
+    public boolean getArcanaProf() {
+        return ArcanaProf;
+    }
+    public boolean getAthleticsProf() {
+        return AthleticsProf;
+    }
+    public boolean getDeceptionProf() {
+        return DeceptionProf;
+    }
+    public boolean getHistoryProf() {
+        return HistoryProf;
+    }
+    public boolean getInsightProf() {
+        return InsightProf;
+    }
+    public boolean getIntimidationProf() {
+        return IntimidationProf;
+    }
+    public boolean getInvestigationProf() {
+        return InvestigationProf;
+    }
+    public boolean getMedicineProf() {
+        return MedicineProf;
+    }
+    public boolean getNatureProf() {
+        return NatureProf;
+    }
+    public boolean getPerceptionProf() {
+        return PerceptionProf;
+    }
+    public boolean getPerformanceProf() {
+        return PerformanceProf;
+    }
+    public boolean getPersuasionProf() {
+        return PersuasionProf;
+    }
+    public boolean getReligionProf() {
+        return ReligionProf;
+    }
+    public boolean getSleightOfHandProf() {
+        return SleightOfHandProf;
+    }
+    public boolean getStealthProf() {
+        return StealthProf;
+    }
+    public boolean getSurvivalProf() {
+        return SurvivalProf;
+    }
+
+    public void setAcrobaticsProf(boolean AcrobaticsProf) {
+        this.AcrobaticsProf = AcrobaticsProf;
+        setAcrobatics(AcrobaticsProf ? (getDEXmod() + ProficiencyBonus) : getDEXmod());
+    }
+    public void setAnimalHandlingProf(boolean AnimalHandlingProf) {
+        this.AnimalHandlingProf = AnimalHandlingProf;
+        setAnimalHandling(AnimalHandlingProf ? (getWISmod() + ProficiencyBonus) : getWISmod());
+    }
+    public void setArcanaProf(boolean ArcanaProf) {
+        this.ArcanaProf = ArcanaProf;
+        setArcana(ArcanaProf ? (getINTmod() + ProficiencyBonus) : getINTmod());
+    }
+    public void setAthleticsProf(boolean AthleticsProf) {
+        this.AthleticsProf = AthleticsProf;
+        setAthletics(AthleticsProf ? (getSTRmod() + ProficiencyBonus) : getSTRmod());
+    }
+    public void setDeceptionProf(boolean DeceptionProf) {
+        this.DeceptionProf = DeceptionProf;
+        setDeception(DeceptionProf ? (getCHAmod() + ProficiencyBonus) : getCHAmod());
+    }
+    public void setHistoryProf(boolean HistoryProf) {
+        this.HistoryProf = HistoryProf;
+        setHistory(HistoryProf ? (getINTmod() + ProficiencyBonus) : getINTmod());
+    }
+    public void setInsightProf(boolean InsightProf) {
+        this.InsightProf = InsightProf;
+        setInsight(InsightProf ? (getWISmod() + ProficiencyBonus) : getWISmod());
+    }
+    public void setIntimidationProf(boolean IntimidationProf) {
+        this.IntimidationProf = IntimidationProf;
+        setIntimidation(IntimidationProf ? (getCHAmod() + ProficiencyBonus) : getCHAmod());
+    }
+    public void setInvestigationProf(boolean InvestigationProf) {
+        this.InvestigationProf = InvestigationProf;
+        setInvestigation(InvestigationProf ? (getINTmod() + ProficiencyBonus) : getINTmod());
+    }
+    public void setMedicineProf(boolean MedicineProf) {
+        this.MedicineProf = MedicineProf;
+        setMedicine(MedicineProf ? (getWISmod() + ProficiencyBonus) : getWISmod());
+    }
+    public void setNatureProf(boolean NatureProf) {
+        this.NatureProf = NatureProf;
+        setNature(NatureProf ? (getINTmod() + ProficiencyBonus) : getINTmod());
+    }
+    public void setPerceptionProf(boolean PerceptionProf) {
+        this.PerceptionProf = PerceptionProf;
+        setPerception(PerceptionProf ? (getWISmod() + ProficiencyBonus) : getWISmod());
+    }
+    public void setPerformanceProf(boolean PerformanceProf) {
+        this.PerformanceProf = PerformanceProf;
+        setPerformance(PerformanceProf ? (getCHAmod() + ProficiencyBonus) : getCHAmod());
+    }
+    public void setPersuasionProf(boolean PersuasionProf) {
+        this.PersuasionProf = PersuasionProf;
+        setPersuasion(PersuasionProf ? (getCHAmod() + ProficiencyBonus) : getCHAmod());
+    }
+    public void setReligionProf(boolean ReligionProf) {
+        this.ReligionProf = ReligionProf;
+        setReligion(ReligionProf ? (getWISmod() + ProficiencyBonus) : getWISmod());
+    }
+    public void setSleightOfHandProf(boolean SleightOfHandProf) {
+        this.SleightOfHandProf = SleightOfHandProf;
+        setSleightOfHand(SleightOfHandProf ? (getDEXmod() + ProficiencyBonus) : getDEXmod());
+    }
+    public void setStealthProf(boolean StealthProf) {
+        this.StealthProf = StealthProf;
+        setStealth(StealthProf ? (getDEXmod() + ProficiencyBonus) : getDEXmod());
+    }
+    public void setSurvivalProf(boolean SurvivalProf) {
+        this.SurvivalProf = SurvivalProf;
+        setSurvival(SurvivalProf ? (getWISmod() + ProficiencyBonus) : getWISmod());
+    }
+
+    public void setAllSkillProfs(boolean[] SkillProfs) {
+        if (SkillProfs.length == 18) {
+            setAcrobaticsProf(SkillProfs[0]);
+            setAnimalHandlingProf(SkillProfs[1]);
+            setArcanaProf(SkillProfs[2]);
+            setAthleticsProf(SkillProfs[3]);
+            setDeceptionProf(SkillProfs[4]);
+            setHistoryProf(SkillProfs[5]);
+            setInsightProf(SkillProfs[6]);
+            setIntimidationProf(SkillProfs[7]);
+            setInvestigationProf(SkillProfs[8]);
+            setMedicineProf(SkillProfs[9]);
+            setNatureProf(SkillProfs[10]);
+            setPerceptionProf(SkillProfs[11]);
+            setPerformanceProf(SkillProfs[12]);
+            setPersuasionProf(SkillProfs[13]);
+            setReligionProf(SkillProfs[14]);
+            setSleightOfHandProf(SkillProfs[15]);
+            setStealthProf(SkillProfs[16]);
+            setSurvivalProf(SkillProfs[17]);
+        }
+    }
 
     //Skill Modifiers
-    int Acrobatics = AcrobaticsProf ? (DEXmod + ProficiencyBonus) : DEXmod;
-    int AnimalHandling = AnimalHandlingProf ? (WISmod + ProficiencyBonus) : WISmod;
-    int Arcana = ArcanaProf ? (INTmod + ProficiencyBonus) : INTmod;
-    int Athletics = AthleticsProf ? (STRmod + ProficiencyBonus) : STRmod;
-    int Deception = DeceptionProf ? (CHAmod + ProficiencyBonus) : CHAmod;
-    int History = HistoryProf ? (INTmod + ProficiencyBonus) : INTmod;
-    int Insight = InsightProf ? (WISmod + ProficiencyBonus) : WISmod;
-    int Intimidation = IntimidationProf ? (CHAmod + ProficiencyBonus) : CHAmod;
-    int Investigation = InvestigationProf ? (INTmod + ProficiencyBonus) : INTmod;
-    int Medicine = MedicineProf ? (WISmod + ProficiencyBonus) : WISmod;
-    int Nature = NatureProf ? (INTmod + ProficiencyBonus) : INTmod;
-    int Perception = PerceptionProf ? (WISmod + ProficiencyBonus) : WISmod;
-    int Performance = PerformanceProf ? (CHAmod + ProficiencyBonus) : CHAmod;
-    int Persuasion = PersuasionProf ? (CHAmod + ProficiencyBonus) : CHAmod;
-    int Religion = ReligionProf ? (INTmod + ProficiencyBonus) : INTmod;
-    int SleightofHand = SleightOfHandProf ? (DEXmod + ProficiencyBonus) : DEXmod;
-    int Stealth = StealthProf ? (DEXmod + ProficiencyBonus) : DEXmod;
-    int Survival = SurvivalProf ? (WISmod + ProficiencyBonus) : WISmod;
+    private int Acrobatics;
+    private int AnimalHandling;
+    private int Arcana;
+    private int Athletics;
+    private int Deception;
+    private int History;
+    private int Insight;
+    private int Intimidation;
+    private int Investigation;
+    private int Medicine;
+    private int Nature;
+    private int Perception;
+    private int Performance;
+    private int Persuasion;
+    private int Religion;
+    private int SleightOfHand;
+    private int Stealth;
+    private int Survival;
+
+    public int getAcrobatics() {
+        return Acrobatics;
+    }
+    public int getAnimalHandling() {
+        return AnimalHandling;
+    }
+    public int getArcana() {
+        return Arcana;
+    }
+    public int getAthletics() {
+        return Athletics;
+    }
+    public int getDeception() {
+        return Deception;
+    }
+    public int getHistory() {
+        return History;
+    }
+    public int getInsight() {
+        return Insight;
+    }
+    public int getIntimidation() {
+        return Intimidation;
+    }
+    public int getInvestigation() {
+        return Investigation;
+    }
+    public int getMedicine() {
+        return Medicine;
+    }
+    public int getNature() {
+        return Nature;
+    }
+    public int getPerception() {
+        return Perception;
+    }
+    public int getPerformance() {
+        return Performance;
+    }
+    public int getPersuasion() {
+        return Persuasion;
+    }
+    public int getReligion() {
+        return Religion;
+    }
+    public int getSleightOfHand() {
+        return SleightOfHand;
+    }
+    public int getStealth() {
+        return Stealth;
+    }
+    public int getSurvival() {
+        return Survival;
+    }
+
+    public void setAcrobatics(int Acrobatics) {
+        this.Acrobatics = Acrobatics;
+    }
+    public void setAnimalHandling(int AnimalHandling) {
+        this.AnimalHandling = AnimalHandling;
+    }
+    public void setArcana(int Arcana) {
+        this.Arcana = Arcana;
+    }
+    public void setAthletics(int Athletics) {
+        this.Athletics = Athletics;
+    }
+    public void setDeception(int Deception) {
+        this.Deception = Deception;
+    }
+    public void setHistory(int History) {
+        this.History = History;
+    }
+    public void setInsight(int Insight) {
+        this.Insight = Insight;
+        setPassiveInsight();
+    }
+    public void setIntimidation(int Intimidation) {
+        this.Intimidation = Intimidation;
+    }
+    public void setInvestigation(int Investigation) {
+        this.Investigation = Investigation;
+        setPassiveInvestigation();
+    }
+    public void setMedicine(int Medicine) {
+        this.Medicine = Medicine;
+    }
+    public void setNature(int Nature) {
+        this.Nature = Nature;
+    }
+    public void setPerception(int Perception) {
+        this.Perception = Perception;
+        setPassivePerception();
+    }
+    public void setPerformance(int Performance) {
+        this.Performance = Performance;
+    }
+    public void setPersuasion(int Persuasion) {
+        this.Persuasion = Persuasion;
+    }
+    public void setReligion(int Religion) {
+        this.Religion = Religion;
+    }
+    public void setSleightOfHand(int SleightOfHand) {
+        this.SleightOfHand = SleightOfHand;
+    }
+    public void setStealth(int Stealth) {
+        this.Stealth = Stealth;
+        setPassiveStealth();
+    }
+    public void setSurvival(int Survival) {
+        this.Survival = Survival;
+    }
 
     //Passive Skills
-    int PassiveInsight = 10 + Insight;
-    int PassiveInvestigation = 10 + Investigation;
-    int PassivePerception = 10 + Perception;
-    int PassiveStealth = 10 + Stealth;
+    private int PassiveInsight;
+    private int PassiveInvestigation;
+    private int PassivePerception;
+    private int PassiveStealth;
+
+    public int getPassiveInsight() {
+        return PassiveInsight;
+    }
+    public int getPassiveInvestigation() {
+        return PassiveInvestigation;
+    }
+    public int getPassivePerception() {
+        return PassivePerception;
+    }
+    public int getPassiveStealth() {
+        return PassiveStealth;
+    }
+
+    public void setPassiveInsight() {
+        this.PassiveInsight = 10 + getInsight();
+    }
+    public void setPassiveInvestigation() {
+        this.PassiveInvestigation = 10 + getInvestigation();
+    }
+    public void setPassivePerception() {
+        this.PassivePerception = 10 + getPerception();
+    }
+    public void setPassiveStealth() {
+        this.PassiveStealth = 10 + getStealth();
+    }
 
     //Constructors
     public Char(int[] AbilityScores, boolean[] STprofs, boolean[] SkillProfs) {
         if (AbilityScores.length == 6 && STprofs.length == 6 && SkillProfs.length == 18) {
-            setSTR(AbilityScores[0]);
-            setDEX(AbilityScores[1]);
-            setCON(AbilityScores[2]);
-            setINT(AbilityScores[3]);
-            setWIS(AbilityScores[4]);
-            setCHA(AbilityScores[5]);
-    
-            STRSTprof = STprofs[0];
-            DEXSTprof = STprofs[1];
-            CONSTprof = STprofs[2];
-            INTSTprof = STprofs[3];
-            WISSTprof = STprofs[4];
-            CHASTprof = STprofs[5];
-            AcrobaticsProf = SkillProfs[0];
-            AnimalHandlingProf = SkillProfs[1];
-            ArcanaProf = SkillProfs[2];
-            AthleticsProf = SkillProfs[3];
-            DeceptionProf = SkillProfs[4];
-            HistoryProf = SkillProfs[5];
-            InsightProf = SkillProfs[6];
-            IntimidationProf = SkillProfs[7];
-            InvestigationProf = SkillProfs[8];
-            MedicineProf = SkillProfs[9];
-            NatureProf = SkillProfs[10];
-            PerceptionProf = SkillProfs[11];
-            PerformanceProf = SkillProfs[12];
-            PersuasionProf = SkillProfs[13];
-            ReligionProf = SkillProfs[14];
-            SleightOfHandProf = SkillProfs[15];
-            StealthProf = SkillProfs[16];
-            SurvivalProf = SkillProfs[17];
+            setAllAbilityScores(AbilityScores);
+            setAllSTprofs(STprofs);
+            setAllSkillProfs(SkillProfs);
+            setBaseAC();
         }
     }
 
